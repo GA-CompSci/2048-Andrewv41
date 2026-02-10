@@ -50,9 +50,16 @@ public class Game {
      * Hint: Use random.nextInt(10) < 9 for 90% probability
      */
     private void addRandomTile() {
-        // TODO: Complete this method
+        ArrayList<int[]> emptyCells = getEmptyCells();
+        if(emptyCells.isEmpty())return; 
+        int[] spot = emptyCells.get((int)(Math.random() * emptyCells.size()));
         
+        if(random.nextInt(10) < 9) board[spot[0]][spot[1]] = 2;
+        else board[spot[0]][spot[1]] = 4;
+        //same thing as line 60 and 61
+        //board[spot[0]][spot[1]] = (random.nextInt(10)<9) ? 2 : 4;
     }
+    
     
     /**
      * TODO #2: Implement the method to get all empty cells on the board
@@ -65,7 +72,13 @@ public class Game {
     private ArrayList<int[]> getEmptyCells() {
         // TODO: Complete this method
         ArrayList<int[]> emptyCells = new ArrayList<>();
-        
+        for(int row = 0; row < board.length; row++){
+            for(int col = 0; col < board[0].length; col++){
+                if(board[row][col] ==0){
+                    emptyCells.add(new int[]{row,col});
+                }
+            }
+        }
         return emptyCells;
     }
     
@@ -87,12 +100,54 @@ public class Game {
      * 2. If any row changed, add a random tile
      */
     public boolean moveLeft() {
-        // TODO: Complete this method
         boolean moved = false;
-        
+        //check through every row
+        for(int row = 0; row< board.length; row++){
+            int[] temp = new int[BOARD_SIZE];
+            for(int col = 0; col< board[0].length; col++){
+                temp [col] = board[row][col];
+            }
+
+            //Hard part
+            int copyCount = 0;
+            for(int col = 0; < board[0].length; col++){
+                if(board[row][col] != 0);
+            }
+           for( int col = 0; col < board[0].length -1; col++){
+            if(temp[col] == temp[col+1]){
+                temp[col]=temp[col*2];
+                //merged items count toward your score
+                score += temp[col];
+                //eventually we need to add zero
+                for(int scootch = col+1; scootch < board[0].length -1; scootch ++){
+                    temp[scootch] = temp[scootch+1];
+                }
+                temp[board[0].length-1] = 0;
+            }
+           } 
+    // temp[col] = board[row][col];
+    // for(int col = 0; col < board[0].length; col++){
+    //     for(int coll = board[0].length; coll--){
+    //         if(temp[coll-1] == 0){
+    //             temp[coll -1] = temp[coll];
+    //             temp[col] = 0;
+    //         }
+    //         if(temp[coll] == temp[coll-1]) temp[coll-1] = temp[col]*2;
+    //     }
+    // }
+
+            //check for differences
+            for(int col = 0; col< board[0].length; col++){
+                if(temp[col] != board[row][col]) moved = true;
+                board[row]=temp;
+            }
+        }
+        if(moved)addRandomTile();
         return moved;
     }
     
+
+
     /**
      * TODO #4: Implement the moveRight method
      * Requirements:
