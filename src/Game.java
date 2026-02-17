@@ -116,7 +116,7 @@ public class Game {
                     copyCount++;
                 }
             }
-
+            // STOP ONE EARLY SO WE CAN CHECK EVERY NUMBER FOR MERGING
             for (int col = 0; col < board[0].length - 1; col++) {
                 if (temp[col] == temp[col + 1]) {
                     temp[col] = temp[col] * 2;
@@ -152,22 +152,21 @@ public class Game {
      * Hint: Process from right to left instead of left to right
      */
     public boolean moveRight() {
-        // TODO: Complete this method
-        int[] temp = new int[BOARD_SIZE];
         boolean moved = false;
-        for(int row = 0; row<board.length; row++){
-            for (int col = 0; col < board[0].length; col++) {
-                if (col+1 < 4) {
-                    if (temp[col] == temp[col + 1]) {
-                        temp[col + 1] = temp[col] * 2;
-                        temp[col] = 0;
-                    }
-                    if (temp[col + 1] == 0) temp[col + 1] = temp[col];
-                }
-            }
-        }
 
-        if(moved) addRandomTile();
+        // we go through every row
+            // smart copy
+
+            // merge
+
+            // check for differences
+                // trigger moved = true
+                // copy board[row] = temp
+        
+        
+
+        if (moved)
+            addRandomTile();
         return moved;
     }
 
