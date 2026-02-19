@@ -155,18 +155,45 @@ public class Game {
         boolean moved = false;
 
         // we go through every row
-            // smart copy
+        for (int row = 0; row < board.length; row++) {
+            int[] temp = new int[BOARD_SIZE];
 
+            // SMART COPY - skip the zeros when filling up TEMP
+            int copyCount = board[0].length-1;
+            for (int col = board[0].length-1; col >=0; col--) {
+                if (board[row][col] != 0) {
+                    temp[copyCount] = board[row][col];
+                    copyCount--;
+                }
+            }
             // merge
+            for (int col = board[0].length - 1; col > 0; col--) {
+                if (temp[col - 1] == temp[col]) {
+                    temp[col] = temp[col] * 2;
 
+                    score += temp[col];
+                    // start one over and begin to shift
+                    for (int scootch = col - 1; scootch > 0; scootch--) {
+                        temp[scootch] = temp[scootch-1];
+                    }
+                    temp[0] = 0;
+                }
+            }
             // check for differences
-                // trigger moved = true
-                // copy board[row] = temp
-        
-        
+            // trigger moved = true
+            // copy board[row] = temp
+            for (int col = board[0].length - 1; col >= 0; col--) {
+                if (temp[col] != board[row][col]) {
+                    moved = true;
+                    board[row] = temp;
+                }
+            }
 
-        if (moved)
-            addRandomTile();
+            if (moved) {
+                addRandomTile();
+            }
+
+        }
         return moved;
     }
 
@@ -180,9 +207,44 @@ public class Game {
      * Hint: Work with columns instead of rows
      */
     public boolean moveUp() {
-        // TODO: Complete this method
         boolean moved = false;
 
+        // check through every row
+        for (int col = 0; col < board[0].length; col++) {
+            int[] temp = new int[BOARD_SIZE];
+
+            // SMART COPY - skip the zeros when filling up TEMP
+            int copyCount = 0;
+            for (int row = 0; row < board.length; row++) {
+                if (board[row][col] != 0) {
+                    temp[copyCount] = board[row][col];
+                    copyCount++;
+                }
+            }
+            // STOP ONE EARLY SO WE CAN CHECK EVERY NUMBER FOR MERGING
+            for (int row = 0; row < board.length - 1; row++) {
+                if (temp[row] == temp[row + 1]) {
+                    temp[row] = temp[row] * 2;
+                    // merged items count toward your score
+                    score += temp[row];
+                    // eventually we need to add zero
+                    for (int scootch = row + 1; scootch < board.length - 1; scootch++) {
+                        temp[scootch] = temp[scootch + 1];
+                    }
+                    temp[board.length - 1] = 0;
+                }
+            }
+
+            // check for differences
+            for (int row = 0; row < board.length; row++) {
+                if (temp[row] != board[row][col])
+                    moved = true;
+                board[col] = temp;
+            }
+        }
+        if (moved){
+            addRandomTile();
+        }
         return moved;
     }
 
