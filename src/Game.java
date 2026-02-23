@@ -159,8 +159,8 @@ public class Game {
             int[] temp = new int[BOARD_SIZE];
 
             // SMART COPY - skip the zeros when filling up TEMP
-            int copyCount = board[0].length-1;
-            for (int col = board[0].length-1; col >=0; col--) {
+            int copyCount = board[0].length - 1;
+            for (int col = board[0].length - 1; col >= 0; col--) {
                 if (board[row][col] != 0) {
                     temp[copyCount] = board[row][col];
                     copyCount--;
@@ -174,7 +174,7 @@ public class Game {
                     score += temp[col];
                     // start one over and begin to shift
                     for (int scootch = col - 1; scootch > 0; scootch--) {
-                        temp[scootch] = temp[scootch-1];
+                        temp[scootch] = temp[scootch - 1];
                     }
                     temp[0] = 0;
                 }
@@ -188,12 +188,11 @@ public class Game {
                     board[row] = temp;
                 }
             }
-
-            if (moved) {
-                addRandomTile();
-            }
-
         }
+        if (moved) {
+            addRandomTile();
+        }
+
         return moved;
     }
 
@@ -239,10 +238,10 @@ public class Game {
             for (int row = 0; row < board.length; row++) {
                 if (temp[row] != board[row][col])
                     moved = true;
-                board[col] = temp;
+                board[row][col] = temp[row];
             }
         }
-        if (moved){
+        if (moved) {
             addRandomTile();
         }
         return moved;
@@ -256,10 +255,49 @@ public class Game {
      * - Merge from bottom to top
      */
     public boolean moveDown() {
-        // TODO: Complete this method
         boolean moved = false;
 
+        // we go through every row
+        for (int col = 0; col < board[0].length; col++) {
+            int[] temp = new int[BOARD_SIZE];
+
+            // SMART COPY - skip the zeros when filling up TEMP
+            int copyCount = board.length - 1;
+            for (int row = board.length - 1; row >= 0; row--) {
+                if (board[row][col] != 0) {
+                    temp[copyCount] = board[row][col];
+                    copyCount--;
+                }
+            }
+            // merge
+            for (int row = board.length - 1; row > 0; row--) {
+                if (temp[row - 1] == temp[row]) {
+                    temp[row] = temp[row] * 2;
+
+                    score += temp[row];
+                    // start one over and begin to shift
+                    for (int scootch = row - 1; scootch > 0; scootch--) {
+                        temp[scootch] = temp[scootch - 1];
+                    }
+                    temp[0] = 0;
+                }
+            }
+            // check for differences
+            // trigger moved = true
+            // copy board[row] = temp
+            for (int row = board.length - 1; row >= 0; row--) {
+                if (temp[row] != board[row][col]) {
+                    moved = true;
+                    board[row][col] = temp[row];
+                }
+            }
+        }
+        if (moved) {
+            addRandomTile();
+        }
+
         return moved;
+
     }
 
     /**
@@ -271,8 +309,13 @@ public class Game {
      * Hint: Check all tiles and update the hasWon field
      */
     public boolean hasWon() {
-        // TODO: Complete this method
-
+        for (int row = 0; row < board.length; row++) {
+            for (int col = 0; col < board[0].length; col++) {
+                if (board[row][col] == WIN_VALUE) {
+                    return hasWon;
+                }
+            }
+        }
         return false;
     }
 
@@ -287,9 +330,30 @@ public class Game {
      * Hint: First check for empty cells, then check all adjacent pairs
      */
     public boolean isGameOver() {
-        // TODO: Complete this method
-
-        return false;
+        if (gameOver) {
+            return true;
+        }
+        for (int row = 0; row < BOARD_SIZE; row++) {
+            for (int col = 0; col < BOARD_SIZE; col++) {
+                if (board[row][col] == 0) {
+                    return false;
+                }
+            }
+        }
+        for (int row = 0; row < BOARD_SIZE; row++) {
+            for (int col = 0; col < BOARD_SIZE; col++) {
+                if (col < BOARD_SIZE - 1 &&
+                        board[row][col] == board[row][col + 1]) {
+                    return false;
+                }
+                if (row < BOARD_SIZE - 1 &&
+                        board[row][col] == board[row + 1][col]) {
+                    return false;
+                }
+            }
+        }
+        gameOver = true;
+        return true;
     }
 
     // ===================== PROVIDED METHODS - DO NOT MODIFY =====================
