@@ -132,9 +132,10 @@ public class Game {
 
             // check for differences
             for (int col = 0; col < board[0].length; col++) {
-                if (temp[col] != board[row][col])
+                if (temp[col] != board[row][col]) {
                     moved = true;
-                board[row] = temp;
+                    board[row] = temp;
+                }
             }
         }
         if (moved)

@@ -17,11 +17,11 @@ public class GUI extends JFrame {
     // =====================================================================
 
     // Background & text colors
-    private static final Color BACKGROUND_COLOR    = new Color(250, 248, 239);
+    private static final Color BACKGROUND_COLOR    = new Color(0, 0, 0);
     private static final Color TEXT_COLOR           = new Color(119, 110, 101);
     private static final Color BOARD_COLOR         = new Color(187, 173, 160);
     private static final Color BUTTON_COLOR        = new Color(143, 122, 102);
-
+//
     // Tile text colors (low = 2 & 4, high = 8+)
     private static final Color TILE_TEXT_DARK       = new Color(119, 110, 101);
     private static final Color TILE_TEXT_LIGHT      = Color.WHITE;
@@ -31,19 +31,21 @@ public class GUI extends JFrame {
     private static final Color GAME_OVER_COLOR     = Color.RED;
 
     // Tile background colors — one per tile value
-    private static final Color TILE_EMPTY  = new Color(238, 228, 218);
-    private static final Color TILE_2      = new Color(238, 228, 218);
-    private static final Color TILE_4      = new Color(237, 224, 200);
-    private static final Color TILE_8      = new Color(242, 177, 121);
-    private static final Color TILE_16     = new Color(245, 149, 99);
-    private static final Color TILE_32     = new Color(246, 124, 95);
-    private static final Color TILE_64     = new Color(246, 94, 59);
-    private static final Color TILE_128    = new Color(237, 207, 114);
-    private static final Color TILE_256    = new Color(237, 204, 97);
-    private static final Color TILE_512    = new Color(237, 200, 80);
-    private static final Color TILE_1024   = new Color(237, 197, 63);
-    private static final Color TILE_2048   = new Color(237, 194, 46);
-
+    private static final Color TILE_EMPTY  = new Color(0, 0, 0);
+    private static final Color TILE_2      = new Color(250, 100, 100);
+    private static final Color TILE_4      = new Color(235, 110, 110);
+    private static final Color TILE_8      = new Color(220, 120, 120);
+    private static final Color TILE_16     = new Color(205, 130, 130);
+    private static final Color TILE_32     = new Color(190, 140, 140);
+    private static final Color TILE_64     = new Color(175, 150, 150);
+    private static final Color TILE_128    = new Color(175, 155, 155);
+    private static final Color TILE_256    = new Color(170, 155, 155);
+    private static final Color TILE_512    = new Color(170, 160, 160);
+    private static final Color TILE_1024   = new Color(165, 160, 160);
+    private static final Color TILE_2048   = new Color(165, 165, 165);
+//238, 228, 218
+//237, 224, 200     
+//242, 177, 121
     private static final Color[] TILE_COLORS = {
         TILE_EMPTY, TILE_2, TILE_4, TILE_8, TILE_16, TILE_32,
         TILE_64, TILE_128, TILE_256, TILE_512, TILE_1024, TILE_2048
